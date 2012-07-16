@@ -12,7 +12,7 @@ class Shopello
 	 *
 	 * @access private
 	 */
-	private $_api_endpoint = 'http://api.shopello.se/1/';
+	private $_api_endpoint = 'https://api.shopello.se/1/';
 	 
 	/**
 	 * API key
@@ -104,17 +104,55 @@ class Shopello
 		$result = curl_exec($curl);
 		
 		// Decode
-		return json_decode($result);
+		$data = json_decode($result);
+		
+		// Error? Exception!
+		if(isset($data->error)){
+			throw new Exception($data->error);
+		}
+		
+		// Return data
+		return $data;
 	}
 	
 	/**
 	 * Products
 	 *
-	 * @param array		Optional.
+	 * @param array|integer	Optional.
+	 * @param array			Optional.
 	 * @return array
 	 */
-	public function products($params = array()){
-		return $this->call('products', $params);
+	public function products($product_id = null, $params = array()){
+		$method = 'products';
+		
+		if(is_array($product_id)){
+			$params = $product_id;
+		}
+		else{
+			$method .= '/' . $product_id;
+		}
+		
+		return $this->call($method, $params);
+	}
+	
+	/**
+	 * Attributes
+	 *
+	 * @param array|integer	Optional.
+	 * @param array			Optional.
+	 * @return array
+	 */
+	public function attributes($attribute = null, $params = array()){
+		$method = 'attributes';
+		
+		if(is_array($attribute)){
+			$params = $attribute;
+		}
+		else{
+			$method .= '/' . $attribute;
+		}
+		
+		return $this->call($method, $params);
 	}
 	
 	/**
