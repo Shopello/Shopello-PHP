@@ -84,6 +84,12 @@ class Shopello
 		
 		// Add params
 		if(count($params) > 0){
+			foreach($params as $key => $val){
+				if(empty($val)){
+					unset($params[$key]);
+				}
+			}
+			
 			$url .= '?' . http_build_query($params);
 		}
 		
@@ -136,6 +142,18 @@ class Shopello
 	}
 	
 	/**
+	 * Related products
+	 *
+	 * @param integer
+	 * @return array
+	 */
+	public function related_products($product_id){
+		$method = 'related_products/' . $product_id;
+		
+		return $this->call($method, array());
+	}
+	
+	/**
 	 * Attributes
 	 *
 	 * @param array|integer	Optional.
@@ -156,6 +174,16 @@ class Shopello
 	}
 	
 	/**
+	 * Stores
+	 *
+	 * @param array
+	 * @return array
+	 */
+	public function stores($params = array()){
+		return $this->call('stores', $params);
+	}
+	
+	/**
 	 * Categories
 	 *
 	 * @param array		Optional.
@@ -163,6 +191,16 @@ class Shopello
 	 */
 	public function categories($params = array()){
 		return $this->call('categories', $params);
+	}
+	
+	/**
+	 * Categories
+	 *
+	 * @param array		Optional.
+	 * @return array
+	 */
+	public function category_parents($params = array()){
+		return $this->call('category_parents', $params);
 	}
 	
 	/**
