@@ -92,7 +92,7 @@ class Shopello
 			
 			$url .= '?' . http_build_query($params);
 		}
-		
+				
 		// Initialize cUrl
 		$curl = curl_init();
 		
@@ -211,5 +211,17 @@ class Shopello
 	 */
 	public function customers($params = array()){
 		return $this->call('customers', $params);
+	}
+	
+	/**
+	 * Batch
+	 *
+	 * @param array
+	 * @return array
+	 */
+	public function batch($batch = array()){
+		return $this->call('batch', array(
+			'batch' => $batch
+		));
 	}
 }
