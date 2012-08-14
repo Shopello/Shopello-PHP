@@ -76,14 +76,15 @@ class Shopello
 	 *
 	 * @param string
 	 * @param array		Optional.
+	 * @param bool		Optional.
 	 * @return array
 	 */
-	public function call($method, $params = array()){
+	public function call($method, $params = array(), $post = false){
 		// Assemble the URL
 		$url = $this->get_api_endpoint() . $method . '.json';
 		
 		// Add params
-		if(count($params) > 0){
+		if(!$post && count($params) > 0){
 			foreach($params as $key => $val){
 				if(empty($val)){
 					unset($params[$key]);
@@ -92,7 +93,7 @@ class Shopello
 			
 			$url .= '?' . http_build_query($params);
 		}
-				
+		
 		// Initialize cUrl
 		$curl = curl_init();
 		
@@ -105,6 +106,12 @@ class Shopello
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 			'X-API-KEY: ' . $this->get_api_key()
 		));
+		
+		// Post
+		if($post){
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+		}
 		
 		// Execute
 		$result = curl_exec($curl);
@@ -222,6 +229,6 @@ class Shopello
 	public function batch($batch = array()){
 		return $this->call('batch', array(
 			'batch' => $batch
-		));
+		), true);
 	}
 }
