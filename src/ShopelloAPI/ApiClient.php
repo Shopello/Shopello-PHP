@@ -58,11 +58,12 @@ class ApiClient
         $uri = $this->apiEndpoint . $method . '.json';
 
         // Filter empty params
-        foreach ($parameters as $key => $value) {
-            if (empty($value)) {
-                unset($parameters[$key]);
-            }
-        }
+        $parameters = array_filter(
+            $parameters,
+            (function ($var) {
+                return !empty($var);
+            })
+        );
 
         // CURL Stuff
         $this->curl->reset();
