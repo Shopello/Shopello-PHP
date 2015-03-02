@@ -8,8 +8,8 @@ all:
 	env php --version
 	make lint
 	make phpcs
-#	make phpmd
-#	make unittest
+	make phpmd
+	make unittest
 
 unittest:
 	$(PROJECT_DIR)/vendor/bin/phpunit                         \
