@@ -80,5 +80,4 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
         $actual09 = $this->target->getStores();
         $actual10 = $this->target->getStore(1);
     }
-
 }
