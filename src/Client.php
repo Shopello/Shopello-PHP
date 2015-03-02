@@ -1,11 +1,13 @@
 <?php
+namespace Shopello\API;
+
 /**
  * Shopello API wrapper
  *
  * @author Karl Laurentius Roos <karl.roos@produktion203.se>
  * @version 1.0
  */
-class Shopello
+class Client
 {
 	/**
 	 * API endpoint
@@ -13,14 +15,14 @@ class Shopello
 	 * @access private
 	 */
 	private $_api_endpoint = 'https://api.shopello.se/1/';
-	 
+
 	/**
 	 * API key
 	 *
 	 * @access private
 	 */
 	private $_api_key;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -32,7 +34,7 @@ class Shopello
 			$this->set_api_key($api_key);
 		}
 	}
-	
+
 	/**
 	 * Set API endpoint
 	 *
@@ -42,7 +44,7 @@ class Shopello
 	public function set_api_endpoint($api_endpoint){
 		$this->_api_endpoint = $api_endpoint;
 	}
-	
+
 	/**
 	 * Get API endpoint
 	 *
@@ -51,7 +53,7 @@ class Shopello
 	public function get_api_endpoint(){
 		return $this->_api_endpoint;
 	}
-	
+
 	/**
 	 * Set API key
 	 *
@@ -61,7 +63,7 @@ class Shopello
 	public function set_api_key($api_key){
 		$this->_api_key = $api_key;
 	}
-	
+
 	/**
 	 * Get API key
 	 *
@@ -70,7 +72,7 @@ class Shopello
 	public function get_api_key(){
 		return $this->_api_key;
 	}
-	
+
 	/**
 	 * Call
 	 *
@@ -82,7 +84,7 @@ class Shopello
 	public function call($method, $params = array(), $post = false){
 		// Assemble the URL
 		$url = $this->get_api_endpoint() . $method . '.json';
-		
+
 		// Add params
 		if(!$post && count($params) > 0){
 			foreach($params as $key => $val){
@@ -90,15 +92,15 @@ class Shopello
 					unset($params[$key]);
 				}
 			}
-			
+
 			$url .= '?' . http_build_query($params);
 		}
-		
+
 		// Initialize cUrl
 		$curl = curl_init();
-		
+
 		// Set the cURL parameters
-		curl_setopt($curl, CURLOPT_URL, $url); 
+		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_NOBODY, false);
 		curl_setopt($curl, CURLOPT_ENCODING , 'gzip');
@@ -106,28 +108,28 @@ class Shopello
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 			'X-API-KEY: ' . $this->get_api_key()
 		));
-		
+
 		// Post
 		if($post){
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
 		}
-		
+
 		// Execute
 		$result = curl_exec($curl);
-		
+
 		// Decode
 		$data = json_decode($result);
-		
+
 		// Error? Exception!
 		if(isset($data->error)){
 			throw new Exception($data->error);
 		}
-		
+
 		// Return data
 		return $data;
 	}
-	
+
 	/**
 	 * Products
 	 *
@@ -137,17 +139,17 @@ class Shopello
 	 */
 	public function products($product_id = null, $params = array()){
 		$method = 'products';
-		
+
 		if(is_array($product_id)){
 			$params = $product_id;
 		}
 		else{
 			$method .= '/' . $product_id;
 		}
-		
+
 		return $this->call($method, $params);
 	}
-	
+
 	/**
 	 * Related products
 	 *
@@ -156,10 +158,10 @@ class Shopello
 	 */
 	public function related_products($product_id){
 		$method = 'related_products/' . $product_id;
-		
+
 		return $this->call($method, array());
 	}
-	
+
 	/**
 	 * Attributes
 	 *
@@ -169,17 +171,17 @@ class Shopello
 	 */
 	public function attributes($attribute = null, $params = array()){
 		$method = 'attributes';
-		
+
 		if(is_array($attribute)){
 			$params = $attribute;
 		}
 		else{
 			$method .= '/' . $attribute;
 		}
-		
+
 		return $this->call($method, $params);
 	}
-	
+
 	/**
 	 * Stores
 	 *
@@ -189,7 +191,7 @@ class Shopello
 	public function stores($params = array()){
 		return $this->call('stores', $params);
 	}
-	
+
 	/**
 	 * Categories
 	 *
@@ -199,7 +201,7 @@ class Shopello
 	public function categories($params = array()){
 		return $this->call('categories', $params);
 	}
-	
+
 	/**
 	 * Categories
 	 *
@@ -209,7 +211,7 @@ class Shopello
 	public function category_parents($params = array()){
 		return $this->call('category_parents', $params);
 	}
-	
+
 	/**
 	 * Customers
 	 *
@@ -219,7 +221,7 @@ class Shopello
 	public function customers($params = array()){
 		return $this->call('customers', $params);
 	}
-	
+
 	/**
 	 * Batch
 	 *
