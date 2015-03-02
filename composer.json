@@ -13,6 +13,10 @@
         }
     ],
 
+    "require": {
+        "curl/curl": "@stable"
+    },
+
     "require-dev": {
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "@stable",
@@ -23,6 +27,12 @@
     "autoload": {
         "psr-4": {
             "Shopello\\API\\": "src"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Shopello\\API\\": "unit/src"
         }
     }
 }
