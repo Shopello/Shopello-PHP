@@ -8,3 +8,6 @@ install:
   - composer install
 script:
   - make
+notifications:
+  email:
+    - tech@shopello.se
