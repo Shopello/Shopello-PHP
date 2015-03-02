@@ -122,7 +122,7 @@ class ApiClient
      *
      * @docs https://docs.shopelloapi.com/#products
      */
-    public function getProducts($parameters)
+    public function getProducts($parameters = array())
     {
         return $this->call('products', $parameters);
     }
