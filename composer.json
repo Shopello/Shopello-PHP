@@ -26,13 +26,13 @@
 
     "autoload": {
         "psr-4": {
-            "Shopello\\API\\": "src"
+            "Shopello\\API\\": "src/ShopelloAPI"
         }
     },
 
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Shopello\\API\\": "unit/src"
+            "Tests\\Shopello\\API\\": "unit/src/ShopelloAPI"
         }
     }
 }
