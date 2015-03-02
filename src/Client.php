@@ -14,14 +14,14 @@ class Client
      *
      * @access private
      */
-    private $_api_endpoint = 'https://api.shopello.se/1/';
+    private $apiEndpoint = 'https://api.shopello.se/1/';
 
     /**
      * API key
      *
      * @access private
      */
-    private $_api_key;
+    private $apiKey;
 
     /**
      * Constructor
@@ -29,9 +29,10 @@ class Client
      * @param string Optional.
      * @return void
      */
-    public function __construct($api_key = null){
-        if($api_key !== null){
-            $this->set_api_key($api_key);
+    public function __construct($api_key = null)
+    {
+        if ($api_key !== null) {
+            $this->setApiKey($api_key);
         }
     }
 
@@ -41,8 +42,9 @@ class Client
      * @param string
      * @return void
      */
-    public function set_api_endpoint($api_endpoint){
-        $this->_api_endpoint = $api_endpoint;
+    public function setApiEndpoint($api_endpoint)
+    {
+        $this->apiEndpoint = $api_endpoint;
     }
 
     /**
@@ -50,8 +52,9 @@ class Client
      *
      * @return string
      */
-    public function get_api_endpoint(){
-        return $this->_api_endpoint;
+    public function getApiEndpoint()
+    {
+        return $this->apiEndpoint;
     }
 
     /**
@@ -60,8 +63,9 @@ class Client
      * @param string
      * @return void
      */
-    public function set_api_key($api_key){
-        $this->_api_key = $api_key;
+    public function setApiKey($api_key)
+    {
+        $this->apiKey = $api_key;
     }
 
     /**
@@ -69,8 +73,9 @@ class Client
      *
      * @return string
      */
-    public function get_api_key(){
-        return $this->_api_key;
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 
     /**
@@ -81,14 +86,15 @@ class Client
      * @param bool   Optional.
      * @return array
      */
-    public function call($method, $params = array(), $post = false){
+    public function call($method, $params = array(), $post = false)
+    {
         // Assemble the URL
-        $url = $this->get_api_endpoint() . $method . '.json';
+        $url = $this->getApiEndpoint() . $method . '.json';
 
         // Add params
-        if(!$post && count($params) > 0){
-            foreach($params as $key => $val){
-                if(empty($val)){
+        if (!$post && count($params) > 0) {
+            foreach ($params as $key => $val) {
+                if (empty($val)) {
                     unset($params[$key]);
                 }
             }
@@ -103,14 +109,14 @@ class Client
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_NOBODY, false);
-        curl_setopt($curl, CURLOPT_ENCODING , 'gzip');
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'X-API-KEY: ' . $this->get_api_key()
+            'X-API-KEY: ' . $this->getApiKey()
         ));
 
         // Post
-        if($post){
+        if ($post) {
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
         }
@@ -122,8 +128,8 @@ class Client
         $data = json_decode($result);
 
         // Error? Exception!
-        if(isset($data->error)){
-            throw new Exception($data->error);
+        if (isset($data->error)) {
+            throw new \Exception($data->error);
         }
 
         // Return data
@@ -137,13 +143,13 @@ class Client
      * @param array          Optional.
      * @return array
      */
-    public function products($product_id = null, $params = array()){
+    public function products($product_id = null, $params = array())
+    {
         $method = 'products';
 
-        if(is_array($product_id)){
+        if (is_array($product_id)) {
             $params = $product_id;
-        }
-        else{
+        } else {
             $method .= '/' . $product_id;
         }
 
@@ -156,7 +162,8 @@ class Client
      * @param integer
      * @return array
      */
-    public function related_products($product_id){
+    public function relatedProducts($product_id)
+    {
         $method = 'related_products/' . $product_id;
 
         return $this->call($method, array());
@@ -169,13 +176,13 @@ class Client
      * @param array          Optional.
      * @return array
      */
-    public function attributes($attribute = null, $params = array()){
+    public function attributes($attribute = null, $params = array())
+    {
         $method = 'attributes';
 
-        if(is_array($attribute)){
+        if (is_array($attribute)) {
             $params = $attribute;
-        }
-        else{
+        } else {
             $method .= '/' . $attribute;
         }
 
@@ -188,7 +195,8 @@ class Client
      * @param array
      * @return array
      */
-    public function stores($params = array()){
+    public function stores($params = array())
+    {
         return $this->call('stores', $params);
     }
 
@@ -198,7 +206,8 @@ class Client
      * @param array   Optional.
      * @return array
      */
-    public function categories($params = array()){
+    public function categories($params = array())
+    {
         return $this->call('categories', $params);
     }
 
@@ -208,7 +217,8 @@ class Client
      * @param array   Optional.
      * @return array
      */
-    public function category_parents($params = array()){
+    public function categoryParents($params = array())
+    {
         return $this->call('category_parents', $params);
     }
 
@@ -218,7 +228,8 @@ class Client
      * @param array   Optional.
      * @return array
      */
-    public function customers($params = array()){
+    public function customers($params = array())
+    {
         return $this->call('customers', $params);
     }
 
@@ -228,7 +239,8 @@ class Client
      * @param array
      * @return array
      */
-    public function batch($batch = array()){
+    public function batch($batch = array())
+    {
         return $this->call('batch', array(
             'batch' => $batch
         ), true);
