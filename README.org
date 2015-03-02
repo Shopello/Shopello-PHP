@@ -1,0 +1,18 @@
+[[https://travis-ci.org/Shopello/Shopello-PHP][https://api.travis-ci.org/Shopello/Shopello-PHP.svg?branch=master]]
+
+* Install with composer:
+composer.json
+#+NAME: composer.json
+#+BEGIN_SRC json
+{
+    "repositories": [
+        {
+            "url": "https://github.com/Shopello/Shopello-PHP.git",
+            "type": "git"
+        }
+    ],
+    "require": {
+        "shopello/api": "dev-master"
+    }
+}
+#+END_SRC
