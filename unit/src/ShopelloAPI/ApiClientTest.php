@@ -14,7 +14,7 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->curlMock = $this->getMock('Curl\Curl');
+        $this->curlMock = $this->getMock('\Curl\Curl');
 
         $this->target = new ApiClient($this->curlMock);
     }
@@ -47,14 +47,20 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \Exception
      */
-    public function shouldGetProduct()
+    public function shouldFailRequest()
     {
-        // Fixture
-        // Test
-        $actual = $this->target->getProduct(123);
+        // Fixate
+        $this->curlMock->response = json_encode(
+            (object) array(
+                'error' => 'Not allowed'
+            )
+        );
 
-        // Assert
-        print_r($actual);
+        $this->curlMock->error = 1;
+
+        // Test
+        $actual = $this->target->getProduct(1);
     }
 }
