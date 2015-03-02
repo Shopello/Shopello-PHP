@@ -19,18 +19,14 @@ unittest:
 		--coverage-clover $(LOG_DIR)/unittest_coverage.xml
 
 phpmd:
-#	$(PROJECT_DIR)/vendor/bin/phpmd $(PROJECT_DIR)/src,$(PROJECT_DIR)/unit text codesize,cleancode
-	$(PROJECT_DIR)/vendor/bin/phpmd $(PROJECT_DIR)/src text codesize,cleancode
+	$(PROJECT_DIR)/vendor/bin/phpmd $(PROJECT_DIR)/src,$(PROJECT_DIR)/unit text codesize,cleancode
 
 phpcs:
-#	$(PROJECT_DIR)/vendor/bin/phpcs --standard=PSR1 $(PROJECT_DIR)/src $(PROJECT_DIR)/unit
-#	$(PROJECT_DIR)/vendor/bin/phpcs --standard=PSR2 $(PROJECT_DIR)/src $(PROJECT_DIR)/unit
-	$(PROJECT_DIR)/vendor/bin/phpcs --standard=PSR1 $(PROJECT_DIR)/src
-	$(PROJECT_DIR)/vendor/bin/phpcs --standard=PSR2 $(PROJECT_DIR)/src
+	$(PROJECT_DIR)/vendor/bin/phpcs --standard=PSR1 $(PROJECT_DIR)/src $(PROJECT_DIR)/unit
+	$(PROJECT_DIR)/vendor/bin/phpcs --standard=PSR2 $(PROJECT_DIR)/src $(PROJECT_DIR)/unit
 
 lint:
-#	$(PROJECT_DIR)/vendor/bin/parallel-lint $(PROJECT_DIR)/src $(PROJECT_DIR)/unit
-	$(PROJECT_DIR)/vendor/bin/parallel-lint $(PROJECT_DIR)/src
+	$(PROJECT_DIR)/vendor/bin/parallel-lint $(PROJECT_DIR)/src $(PROJECT_DIR)/unit
 
 clean:
 	rm -r $(LOG_DIR)/*
