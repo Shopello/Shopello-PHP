@@ -83,16 +83,15 @@ class Client
      *
      * @param string
      * @param array  Optional.
-     * @param bool   Optional.
      * @return array
      */
-    public function call($method, $params = array(), $post = false)
+    public function call($method, $params = array())
     {
         // Assemble the URL
         $url = $this->getApiEndpoint() . $method . '.json';
 
         // Add params
-        if (!$post && count($params) > 0) {
+        if (count($params) > 0) {
             foreach ($params as $key => $val) {
                 if (empty($val)) {
                     unset($params[$key]);
@@ -114,12 +113,6 @@ class Client
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'X-API-KEY: ' . $this->getApiKey()
         ));
-
-        // Post
-        if ($post) {
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
-        }
 
         // Execute
         $result = curl_exec($curl);
