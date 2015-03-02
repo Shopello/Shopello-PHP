@@ -1,0 +1,28 @@
+{
+    "name": "shopello/api",
+    "description": "PHP Client for Shopello API",
+    "license": "ISC",
+
+    "authors": [
+        {
+            "name": "Mahir Misto",
+            "email": "mahir@shopello.se"
+        },
+        {
+            "name": "Elis Axelsson"
+        }
+    ],
+
+    "require-dev": {
+        "phpmd/phpmd": "@stable",
+        "phpunit/phpunit": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "jakub-onderka/php-parallel-lint": "@stable"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Shopello\\API\\": "src"
+        }
+    }
+}
