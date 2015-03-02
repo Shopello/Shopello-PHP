@@ -63,4 +63,22 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
         // Test
         $actual = $this->target->getProduct(1);
     }
+
+    /**
+     * @test
+     */
+    public function shouldCallCall()
+    {
+        $actual01 = $this->target->getCategory(1);
+        $actual02 = $this->target->getCategories();
+        $actual03 = $this->target->getCategoryParents();
+        $actual04 = $this->target->getProducts();
+        $actual05 = $this->target->getProduct(1);
+        $actual06 = $this->target->getProductPriceHistory(array('product_id' => 1));
+        $actual07 = $this->target->getRelatedProducts(1);
+        $actual08 = $this->target->getBrands();
+        $actual09 = $this->target->getStores();
+        $actual10 = $this->target->getStore(1);
+    }
+
 }
