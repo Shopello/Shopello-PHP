@@ -88,12 +88,102 @@ class ApiClient
 
 
     /**
-     * Get product from API
+     * Get Category from API
      *
-     * @param integer $product
+     * @docs https://docs.shopelloapi.com/#category
      */
-    public function getProduct($product)
+    public function getCategory($categoryId)
     {
-        return $this->call('products/'.$product);
+        return $this->call('categories/'.$categoryId);
+    }
+
+    /**
+     * Get Categories from API
+     *
+     * @docs https://docs.shopelloapi.com/#categories
+     */
+    public function getCategories()
+    {
+        return $this->call('categories');
+    }
+
+    /**
+     * Get Parent Categories from API
+     *
+     * @docs https://docs.shopelloapi.com/#category-parents
+     */
+    public function getCategoryParents()
+    {
+        return $this->call('category_parents');
+    }
+
+    /**
+     * Get Products from API
+     *
+     * @docs https://docs.shopelloapi.com/#products
+     */
+    public function getProducts($parameters)
+    {
+        return $this->call('products', $parameters);
+    }
+
+    /**
+     * Get Product from API
+     *
+     * @docs https://docs.shopelloapi.com/#product
+     */
+    public function getProduct($productId)
+    {
+        return $this->call('products/'.$productId);
+    }
+
+    /**
+     * Get ProductPrice History from API
+     *
+     * @docs https://docs.shopelloapi.com/#product-price-history
+     */
+    public function getProductPriceHistory($parameters)
+    {
+        return $this->call('price_history', $parameters);
+    }
+
+    /**
+     * Get Related Products from API
+     *
+     * @docs https://docs.shopelloapi.com/#related-products
+     */
+    public function getRelatedProducts($productId)
+    {
+        return $this->call('related_products/'.$productId);
+    }
+
+    /**
+     * Get Brands from API
+     *
+     * @docs https://docs.shopelloapi.com/#brands
+     */
+    public function getBrands()
+    {
+        return $this->call('attributes/brand');
+    }
+
+    /**
+     * Get Stores from API
+     *
+     * @docs https://docs.shopelloapi.com/#stores
+     */
+    public function getStores()
+    {
+        return $this->call('stores');
+    }
+
+    /**
+     * Get Store from API
+     *
+     * @docs https://docs.shopelloapi.com/#store
+     */
+    public function getStore($storeId)
+    {
+        return $this->call('stores/'.$storeId);
     }
 }
