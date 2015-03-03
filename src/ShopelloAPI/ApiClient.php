@@ -187,4 +187,18 @@ class ApiClient
     {
         return $this->call('stores/'.$storeId);
     }
+
+    /**
+     * Get Category Tree
+     */
+    public function getCategoryTree($categoryId = null)
+    {
+        $method = 'category_tree';
+
+        if ($categoryId !== null) {
+            $method += '/'.$categoryId;
+        }
+
+        return $this->call($method);
+    }
 }

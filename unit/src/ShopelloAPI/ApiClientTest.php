@@ -79,5 +79,6 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
         $actual08 = $this->target->getBrands();
         $actual09 = $this->target->getStores();
         $actual10 = $this->target->getStore(1);
+        $actual11 = $this->target->getCategoryTree(1);
     }
 }
