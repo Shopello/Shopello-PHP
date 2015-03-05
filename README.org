@@ -12,7 +12,7 @@ composer.json
         }
     ],
     "require": {
-        "shopello/api": "dev-master"
+        "shopello/api": "@stable"
     }
 }
 #+END_SRC
