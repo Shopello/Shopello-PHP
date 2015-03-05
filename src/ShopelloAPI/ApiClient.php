@@ -205,6 +205,8 @@ class ApiClient
 
     /**
      * Get Category Tree
+     *
+     * @docs https://docs.shopelloapi.com/#category-tree
      */
     public function getCategoryTree($categoryId = null)
     {
