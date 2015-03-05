@@ -96,7 +96,7 @@ class ApiClient
         $error = $this->curl->error;
 
         if ($error) {
-            throw new Exception($result->error . ' (HTTP CODE ' . $this->curl->http_status_code . ')');
+            throw new Exception($error . ' (HTTP CODE ' . $this->curl->http_status_code . ')');
         }
 
         return $result;
