@@ -211,7 +211,7 @@ class ApiClient
         $method = 'category_tree';
 
         if ($categoryId !== null) {
-            $method += '/'.$categoryId;
+            $method .= '/'.$categoryId;
         }
 
         return $this->call($method);
