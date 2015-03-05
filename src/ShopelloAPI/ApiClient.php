@@ -58,7 +58,8 @@ class ApiClient
         $endpoint = parse_url($this->apiEndpoint);
 
         // Replace Path of endpoint with requested path from curl
-        $endpoint['path'] = explode(' ', $this->curl->request_headers[0])[1];
+        $header = explode(' ', $this->curl->request_headers[0]);
+        $endpoint['path'] = $header[1];
 
         return $endpoint['scheme'].'://'.$endpoint['host'].$endpoint['path'];
     }
