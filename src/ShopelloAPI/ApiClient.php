@@ -51,6 +51,20 @@ class ApiClient
 
 
     /**
+     * Get Requested URI -- This is good for debugging purposes
+     */
+    public function getRequestedURI()
+    {
+        $endpoint = parse_url($this->apiEndpoint);
+
+        // Replace Path of endpoint with requested path from curl
+        $endpoint['path'] = explode(' ', $this->curl->request_headers[0])[1];
+
+        return $endpoint['scheme'].'://'.$endpoint['host'].$endpoint['path'];
+    }
+
+
+    /**
      * Make API-call
      */
     private function call($method, $parameters = array())
