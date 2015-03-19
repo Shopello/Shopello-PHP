@@ -5,12 +5,6 @@ composer.json
 #+NAME: composer.json
 #+BEGIN_SRC json
 {
-    "repositories": [
-        {
-            "url": "https://github.com/Shopello/Shopello-PHP.git",
-            "type": "git"
-        }
-    ],
     "require": {
         "shopello/api": "@stable"
     }
