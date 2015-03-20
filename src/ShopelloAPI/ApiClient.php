@@ -19,7 +19,7 @@ class ApiClient
 
 
     /**
-     * @param \Curl\Curl $curl
+     * @param Curl $curl
      * @return void
      */
     public function __construct(Curl $curl)
