@@ -104,7 +104,7 @@ class Api3Client
         $error = $this->curl->error;
 
         if ($error) {
-            throw new Exception($error . ' (HTTP CODE ' . $this->curl->http_status_code . ')');
+            throw new \Exception($error . ' (HTTP CODE ' . $this->curl->http_status_code . ')');
         }
 
         // If JSONP is activated, return instantly
