@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bb5140b85e4b86828260b6550ced7879",
+    "hash": "3fd26bf6cd5dd9aecee5fef2a797f306",
     "packages": [
         {
             "name": "curl/curl",
@@ -1388,7 +1388,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "curl/curl": 0,
         "phpmd/phpmd": 0,
         "phpunit/phpunit": 0,
         "squizlabs/php_codesniffer": 0,

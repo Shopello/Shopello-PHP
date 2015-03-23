@@ -14,7 +14,7 @@
     ],
 
     "require": {
-        "curl/curl": "@stable"
+        "curl/curl": "1.2.0"
     },
 
     "require-dev": {
