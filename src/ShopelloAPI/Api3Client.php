@@ -75,15 +75,15 @@ class Api3Client
     /**
      * Make API-call
      */
-    private function call($method, $uri, $extraParams = array())
+    private function call($method, $uri, $getParams = array(), $postParams = array())
     {
         $uri = $this->apiEndpoint.$uri;
 
-        $extraParams = array_merge($this->apiGetParams, $extraParams);
+        $getParams = array_merge($this->apiGetParams, $getParams);
 
         // Filter empty params
-        $extraParams = array_filter(
-            $extraParams,
+        $getParams = array_filter(
+            $getParams,
             (function ($var) {
                 return !empty($var);
             })
@@ -99,7 +99,16 @@ class Api3Client
         $this->curl->setOpt(CURLOPT_NOBODY, false);
 
         // Do Request
-        $this->curl->$method($uri, $extraParams);
+        switch ($method) {
+            case 'get':
+                $this->curl->get($uri, $getParams);
+                break;
+            case 'post':
+                $this->curl->post($uri.'?'.http_build_query($getParams), $postParams);
+                break;
+            default:
+                throw new \Exception('Requested methodbehaviour is not defined yet');
+        }
 
         $error = $this->curl->error;
 
