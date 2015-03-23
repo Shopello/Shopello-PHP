@@ -129,4 +129,22 @@ class Api3Client
 
         return $result;
     }
+
+    /*******************************************************************************************************************
+     * Channel related methods
+     */
+    public function getChannels()
+    {
+        return $this->call('get', 'channel/');
+    }
+
+    public function createChannel($name)
+    {
+        return $this->call('post', 'channel/', array(), array('name' => $name));
+    }
+
+    public function deleteChannel($id)
+    {
+        return $this->call('delete', 'channel/'.$id.'/');
+    }
 }
