@@ -147,4 +147,9 @@ class Api3Client
     {
         return $this->call('delete', 'channel/'.$id.'/');
     }
+
+    public function getChannelRevenue($id, $startDate, $endDate)
+    {
+        return $this->call('get', 'channel/revenue/'.$id.'/'.$startDate.'/'.$endDate.'/');
+    }
 }
