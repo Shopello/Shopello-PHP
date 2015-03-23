@@ -103,12 +103,15 @@ class Api3Client
             case 'get':
                 $this->curl->get($uri, $getParams);
                 break;
+
             case 'post':
                 $this->curl->post($uri.'?'.http_build_query($getParams), $postParams);
                 break;
+
             case 'delete':
                 $this->curl->delete($uri, $getParams);
                 break;
+
             default:
                 throw new \Exception('Requested method behaviour is not defined yet');
         }
