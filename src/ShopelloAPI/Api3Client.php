@@ -155,4 +155,12 @@ class Api3Client
     {
         return $this->call('get', 'channel/revenue/'.$id.'/'.$startDate.'/'.$endDate.'/');
     }
+
+    /*******************************************************************************************************************
+     * Consumer related methods
+     */
+    public function getConsumerRevenue($startDate, $endDate)
+    {
+        return $this->call('get', 'consumer/revenue/'.$startDate.'/'.$endDate.'/');
+    }
 }
