@@ -44,7 +44,7 @@ class SignUri
         $data = array_pop($parts);
 
         // Decode the data
-        $data = json_decode($this->base64UrlDecode($data));
+        $data = json_decode($this->base64UriDecode($data));
 
         // Create a new signature based on the secret and data and compare it to the data
         // we're verifying, if it is correct, return the signed data.
@@ -66,7 +66,7 @@ class SignUri
      */
     private function createSignature($secret, $params)
     {
-        $tokenData = $this->base64UrlEncode(json_encode($params));
+        $tokenData = $this->base64UriEncode(json_encode($params));
 
         // Get 10 last characters from the hash
         $hash = substr(hash('sha256', $secret.$tokenData), -10);
@@ -79,7 +79,7 @@ class SignUri
     /**
      * URL Safe base64 encode
      */
-    private function base64UrlEncode($data)
+    private function base64UriEncode($data)
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
@@ -89,7 +89,7 @@ class SignUri
     /**
      * URL Safe base64 decode
      */
-    private function base64UrlDecode($data)
+    private function base64UriDecode($data)
     {
         return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
     }
