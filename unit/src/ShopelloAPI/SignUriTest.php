@@ -32,7 +32,7 @@ class SignUriTest extends \PHPUnit_Framework_TestCase
         $actual = $this->target->signUri($uri, $secret, $paramName, $params);
 
         // Assert
-        $this->assertSame('https://example.com/?clickdata=1077e65030.WzExMTEsMjIyMl0', $actual);
+        $this->assertSame('https://example.com/?clickdata=b61077e65030.WzExMTEsMjIyMl0', $actual);
     }
 
 
@@ -43,7 +43,7 @@ class SignUriTest extends \PHPUnit_Framework_TestCase
     public function shouldExtractData()
     {
         // Fixture
-        $uri = 'https://example.com/?clickdata=1077e65030.WzExMTEsMjIyMl0';
+        $uri = 'https://example.com/?clickdata=b61077e65030.WzExMTEsMjIyMl0';
         $secret = 123456789;
         $paramName = 'clickdata';
 

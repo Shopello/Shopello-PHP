@@ -68,10 +68,22 @@ class SignUri
     {
         $tokenData = $this->base64UriEncode(json_encode($params));
 
-        // Get 10 last characters from the hash
-        $hash = substr(hash('sha256', $secret.$tokenData), -10);
+        $hash = $this->hash($secret.$tokenData);
 
         return $hash.'.'.$tokenData;
+    }
+
+
+
+    /**
+     * Internal Hashing method, it hashes and cuts of some data at the end of the
+     * string to return it for usage
+     */
+    private function hash($data)
+    {
+        $hash = hash('sha256', $data);
+
+        return substr($hash, -12);
     }
 
 
