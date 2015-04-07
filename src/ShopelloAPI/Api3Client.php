@@ -112,6 +112,10 @@ class Api3Client
                 $this->curl->delete($uri, $getParams);
                 break;
 
+            case 'put':
+                $this->curl->put($uri.'?'.http_build_query($getParams), $postParams);
+                break;
+
             default:
                 throw new \Exception('Requested method behaviour is not defined yet');
         }
@@ -162,5 +166,18 @@ class Api3Client
     public function getConsumerRevenue($startDate, $endDate)
     {
         return $this->call('get', 'consumer/revenue/'.$startDate.'/'.$endDate.'/');
+    }
+
+    /*******************************************************************************************************************
+     * Consumer Secret methods
+     */
+    public function getConsumerSecret()
+    {
+        return $this->call('get', 'consumer/secret/');
+    }
+
+    public function generateNewConsumerSecret()
+    {
+        return $this->call('put', 'consumer/secret/');
     }
 }
