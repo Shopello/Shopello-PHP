@@ -49,6 +49,18 @@ class Api3Client
 
 
     /**
+     * Set API Key
+     *
+     * @var string $apiKey
+     * @return void
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+    }
+
+
+    /**
      * Set API Endpoint, for example: https://se.shopelloapi.com/v3/
      *
      * @var strong $apiEndpoint
@@ -75,7 +87,7 @@ class Api3Client
     /**
      * Make API-call
      */
-    private function call($method, $uri, $getParams = array(), $postParams = array())
+    private function call($method, $uri, $getParams = array(), $postParams = array(), $authMethod = 'basic')
     {
         $uri = $this->apiEndpoint.$uri;
 
@@ -93,7 +105,11 @@ class Api3Client
         $this->curl->reset();
 
         $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
-        $this->curl->setBasicAuthentication($this->apiUsername, $this->apiPassword);
+        if ('basic' === $authMethod) {
+            $this->curl->setBasicAuthentication($this->apiUsername, $this->apiPassword);
+        } else {
+            $this->curl->setHeader('X-API-KEY', $this->apiKey);
+        }
         $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
         $this->curl->setOpt(CURLOPT_HEADER, false);
         $this->curl->setOpt(CURLOPT_NOBODY, false);
@@ -179,5 +195,13 @@ class Api3Client
     public function generateNewConsumerSecret()
     {
         return $this->call('put', 'consumer/secret/');
+    }
+
+    /*******************************************************************************************************************
+     * Deeplink generator
+     */
+    public function createDeepLink($uri)
+    {
+        return $this->call('post', 'deepLinkGenerator/', array(), array('uri' => $uri), 'apikey');
     }
 }
