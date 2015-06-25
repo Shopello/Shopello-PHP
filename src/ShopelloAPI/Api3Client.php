@@ -105,11 +105,18 @@ class Api3Client
         $this->curl->reset();
 
         $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
-        if ('basic' === $authMethod) {
-            $this->curl->setBasicAuthentication($this->apiUsername, $this->apiPassword);
-        } else {
-            $this->curl->setHeader('X-API-KEY', $this->apiKey);
+
+        switch ($authMethod) {
+            case 'apikey':
+                $this->curl->setHeader('X-API-KEY', $this->apiKey);
+                break;
+
+            case 'basic':
+            default:
+                $this->curl->setBasicAuthentication($this->apiUsername, $this->apiPassword);
+                break;
         }
+
         $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
         $this->curl->setOpt(CURLOPT_HEADER, false);
         $this->curl->setOpt(CURLOPT_NOBODY, false);
