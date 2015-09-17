@@ -88,9 +88,15 @@ class ApiClient
         $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
         $this->curl->setOpt(CURLOPT_HEADER, false);
         $this->curl->setOpt(CURLOPT_NOBODY, false);
+        $this->curl->setOpt(CURLOPT_CONNECTTIMEOUT, 3);
+        $this->curl->setOpt(CURLOPT_TIMEOUT, 300);
 
         // Do Request
         $this->curl->get($uri, $parameters);
+
+        if ($this->curl->curlErrorCode == 28) {
+            throw new \Exception('Connection timeout', 28);
+        }
 
         $result = json_decode($this->curl->response);
         $error = $this->curl->error;
