@@ -85,6 +85,25 @@ class Api3Client
 
 
     /**
+     * Seth auth method for curl request
+     *
+     * @param string "apikey" or "basic"
+     */
+    private function setAuthMethod($authMethod)
+    {
+        switch ($authMethod) {
+            case 'apikey':
+                $this->curl->setHeader('X-API-KEY', $this->apiKey);
+                break;
+
+            case 'basic':
+            default:
+                $this->curl->setBasicAuthentication($this->apiUsername, $this->apiPassword);
+                break;
+        }
+    }
+
+    /**
      * Make API-call
      */
     private function call($method, $uri, $getParams = array(), $postParams = array(), $authMethod = 'basic')
@@ -106,16 +125,7 @@ class Api3Client
 
         $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
 
-        switch ($authMethod) {
-            case 'apikey':
-                $this->curl->setHeader('X-API-KEY', $this->apiKey);
-                break;
-
-            case 'basic':
-            default:
-                $this->curl->setBasicAuthentication($this->apiUsername, $this->apiPassword);
-                break;
-        }
+        $this->setAuthMethod($authMethod);
 
         $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
         $this->curl->setOpt(CURLOPT_HEADER, false);
