@@ -94,7 +94,7 @@ class ApiClient
         // Do Request
         $this->curl->get($uri, $parameters);
 
-        if ($this->curl->curlErrorCode == 28) {
+        if ($this->curl->curl_error_code == 28) {
             throw new \Exception('Connection timeout', 28);
         }
 

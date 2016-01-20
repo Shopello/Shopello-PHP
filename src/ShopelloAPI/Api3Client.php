@@ -145,7 +145,7 @@ class Api3Client
                 throw new \Exception('Requested method behaviour is not defined yet');
         }
 
-        if ($this->curl->curlErrorCode == 28) {
+        if ($this->curl->curl_error_code == 28) {
             throw new \Exception('Connection timeout', 28);
         }
 
