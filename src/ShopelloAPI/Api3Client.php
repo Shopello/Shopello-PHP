@@ -63,7 +63,7 @@ class Api3Client
     /**
      * Set API Endpoint, for example: https://se.shopelloapi.com/v3/
      *
-     * @var strong $apiEndpoint
+     * @var string $apiEndpoint
      * @return void
      */
     public function setApiEndpoint($apiEndpoint)
