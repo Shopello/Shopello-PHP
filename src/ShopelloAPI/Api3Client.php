@@ -25,6 +25,12 @@ class Api3Client
 
 
     /**
+     * Persistent curl options
+     */
+    private $curlOptions = array();
+
+
+    /**
      * @param Curl $curl
      * @return void
      */
@@ -85,6 +91,40 @@ class Api3Client
 
 
     /**
+     * Set persistent cURL options
+     *
+     * @param array(<curlopt_constant> => <value>) $options
+     */
+    public function setCurlOptions($options)
+    {
+        $this->curlOptions = $options;
+    }
+
+
+    /**
+     * Apply cURL options
+     */
+    private function applyCurlOptions($authMethod)
+    {
+        $this->curl->reset();
+
+        $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
+
+        $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
+        $this->curl->setOpt(CURLOPT_HEADER, false);
+        $this->curl->setOpt(CURLOPT_NOBODY, false);
+        $this->curl->setOpt(CURLOPT_CONNECTTIMEOUT, 3);
+        $this->curl->setOpt(CURLOPT_TIMEOUT, 300);
+
+        $this->setAuthMethod($authMethod);
+
+        foreach ($this->curlOptions as $key => $value) {
+            $this->curl->setOpt($key, $value);
+        }
+    }
+
+
+    /**
      * Seth auth method for curl request
      *
      * @param string "apikey" or "basic"
@@ -102,6 +142,7 @@ class Api3Client
                 break;
         }
     }
+
 
     /**
      * Make API-call
@@ -121,17 +162,7 @@ class Api3Client
         );
 
         // CURL Stuff
-        $this->curl->reset();
-
-        $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
-
-        $this->setAuthMethod($authMethod);
-
-        $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
-        $this->curl->setOpt(CURLOPT_HEADER, false);
-        $this->curl->setOpt(CURLOPT_NOBODY, false);
-        $this->curl->setOpt(CURLOPT_CONNECTTIMEOUT, 3);
-        $this->curl->setOpt(CURLOPT_TIMEOUT, 300);
+        $this->applyCurlOptions($authMethod);
 
         // Do Request
         switch ($method) {
