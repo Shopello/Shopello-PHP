@@ -11,11 +11,18 @@ class ApiClient
      */
     private $curl;
 
+
     /**
      * Shopello API Settings
      */
     private $apiKey = null;
     private $apiEndpoint = null;
+
+
+    /**
+     * Persistent curl options
+     */
+    private $curlOptions = array();
 
 
     /**
@@ -51,6 +58,38 @@ class ApiClient
 
 
     /**
+     * Set persistent cURL options
+     *
+     * @param array(<curlopt_constant> => <value>) $options
+     */
+    public function setCurlOptions($options)
+    {
+        $this->curlOptions = $options;
+    }
+
+
+    /**
+     * Apply cURL options
+     */
+    private function applyCurlOptions()
+    {
+        $this->curl->reset();
+
+        $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
+        $this->curl->setHeader('X-API-KEY', $this->apiKey);
+        $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
+        $this->curl->setOpt(CURLOPT_HEADER, false);
+        $this->curl->setOpt(CURLOPT_NOBODY, false);
+        $this->curl->setOpt(CURLOPT_CONNECTTIMEOUT, 3);
+        $this->curl->setOpt(CURLOPT_TIMEOUT, 300);
+
+        foreach ($this->curlOptions as $key => $value) {
+            $this->curl->setOpt($key, $value);
+        }
+    }
+
+
+    /**
      * Get Requested URI -- This is good for debugging purposes
      */
     public function getRequestedURI()
@@ -81,15 +120,7 @@ class ApiClient
         );
 
         // CURL Stuff
-        $this->curl->reset();
-
-        $this->curl->setUserAgent('Shopello-PHP API Client/1.0');
-        $this->curl->setHeader('X-API-KEY', $this->apiKey);
-        $this->curl->setOpt(CURLOPT_ENCODING, 'gzip');
-        $this->curl->setOpt(CURLOPT_HEADER, false);
-        $this->curl->setOpt(CURLOPT_NOBODY, false);
-        $this->curl->setOpt(CURLOPT_CONNECTTIMEOUT, 3);
-        $this->curl->setOpt(CURLOPT_TIMEOUT, 300);
+        $this->applyCurlOptions();
 
         // Do Request
         $this->curl->get($uri, $parameters);
