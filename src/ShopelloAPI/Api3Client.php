@@ -125,7 +125,7 @@ class Api3Client
 
 
     /**
-     * Seth auth method for curl request
+     * Set auth method for curl request
      *
      * @param string "apikey" or "basic"
      */
