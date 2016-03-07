@@ -254,8 +254,8 @@ class Api3Client
     /*******************************************************************************************************************
      * Deeplink generator
      */
-    public function createDeepLink($uri)
+    public function createDeepLink($uri, $params = array())
     {
-        return $this->call('post', 'deepLinkGenerator/', array(), array('uri' => $uri), 'apikey');
+        return $this->call('post', 'deepLinkGenerator/', $params, array('uri' => $uri), 'apikey');
     }
 }
