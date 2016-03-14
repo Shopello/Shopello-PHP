@@ -220,6 +220,11 @@ class Api3Client
         return $this->call('post', 'channel/', array(), array('name' => $name));
     }
 
+    public function updateChannel($id, $params = array())
+    {
+        return $this->call('post', 'channel/'.$id.'/', array(), $params);
+    }
+
     public function deleteChannel($id)
     {
         return $this->call('delete', 'channel/'.$id.'/');
