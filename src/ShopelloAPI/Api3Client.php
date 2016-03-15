@@ -215,9 +215,17 @@ class Api3Client
         return $this->call('get', 'channel/');
     }
 
-    public function createChannel($name)
+    public function createChannel($name, $uri = null)
     {
-        return $this->call('post', 'channel/', array(), array('name' => $name));
+        $data = array(
+            'name' => $name
+        );
+
+        if ($uri) {
+            $data['uri'] = $uri;
+        }
+
+        return $this->call('post', 'channel/', array(), $data);
     }
 
     public function updateChannel($id, $params = array())
