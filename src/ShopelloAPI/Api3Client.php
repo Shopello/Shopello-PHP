@@ -265,6 +265,14 @@ class Api3Client
     }
 
     /*******************************************************************************************************************
+     * Store status log
+     */
+    public function getStoreStatusLog()
+    {
+        return $this->call('get', 'store/status_log/');
+    }
+
+    /*******************************************************************************************************************
      * Deeplink generator
      */
     public function createDeepLink($uri, $params = array())
